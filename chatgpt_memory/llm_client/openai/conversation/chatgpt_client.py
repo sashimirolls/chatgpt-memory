@@ -1,8 +1,8 @@
 import logging
 import uuid
-
 from langchain import LLMChain, OpenAI, PromptTemplate
 from pydantic import BaseModel
+
 
 from chatgpt_memory.llm_client.llm_client import LLMClient
 from chatgpt_memory.llm_client.openai.conversation.config import ChatGPTConfig
@@ -34,13 +34,13 @@ class ChatGPTClient(LLMClient):
                 model_name=config.model_name,
                 max_retries=config.max_retries,
                 max_tokens=config.max_tokens,
-            ),
+            ), # type: ignore
             prompt=prompt,
             verbose=config.verbose,
         )
         self.memory_manager = memory_manager
 
-    def converse(self, message: str, conversation_id: str = None) -> ChatGPTResponse:
+    def converse(self, message: str, conversation_id: str = None) -> ChatGPTResponse: # type: ignore
         """
         Allows user to chat with user by leveraging the infinite contextual memor for fetching and
         adding historical messages to the prompt to the ChatGPT model.

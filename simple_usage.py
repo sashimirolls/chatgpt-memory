@@ -3,25 +3,28 @@
 This script describes a simple usage of the library.
 You can see a breakdown of the individual steps in the README.md file.
 """
+
 from chatgpt_memory.datastore import RedisDataStore, RedisDataStoreConfig
 
+from dotenv import load_dotenv
 ## set the following ENVIRONMENT Variables before running this script
 # Import necessary modules
 from chatgpt_memory.environment import OPENAI_API_KEY, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT
 from chatgpt_memory.llm_client import ChatGPTClient, ChatGPTConfig, EmbeddingClient, EmbeddingConfig
 from chatgpt_memory.memory import MemoryManager
 
+load_dotenv()
 # Instantiate an EmbeddingConfig object with the OpenAI API key
-embedding_config = EmbeddingConfig(api_key=OPENAI_API_KEY)
+embedding_config = EmbeddingConfig(api_key=OPENAI_API_KEY) # type: ignore
 
 # Instantiate an EmbeddingClient object with the EmbeddingConfig object
 embed_client = EmbeddingClient(config=embedding_config)
 
 # Instantiate a RedisDataStoreConfig object with the Redis connection details
 redis_datastore_config = RedisDataStoreConfig(
-    host=REDIS_HOST,
+    host=REDIS_HOST, # type: ignore
     port=REDIS_PORT,
-    password=REDIS_PASSWORD,
+    password=REDIS_PASSWORD, # type: ignore
 )
 
 # Instantiate a RedisDataStore object with the RedisDataStoreConfig object
@@ -31,7 +34,7 @@ redis_datastore = RedisDataStore(config=redis_datastore_config)
 memory_manager = MemoryManager(datastore=redis_datastore, embed_client=embed_client, topk=1)
 
 # Instantiate a ChatGPTConfig object with the OpenAI API key and verbose set to True
-chat_gpt_config = ChatGPTConfig(api_key=OPENAI_API_KEY, verbose=False)
+chat_gpt_config = ChatGPTConfig(api_key=OPENAI_API_KEY, verbose=False) # type: ignore
 
 # Instantiate a ChatGPTClient object with the ChatGPTConfig object and MemoryManager object
 chat_gpt_client = ChatGPTClient(config=chat_gpt_config, memory_manager=memory_manager)
@@ -46,7 +49,7 @@ while True:
     user_message = input("\n \033[92m Please enter your message: ")
 
     # Use the ChatGPTClient object to generate a response
-    response = chat_gpt_client.converse(message=user_message, conversation_id=None)
+    response = chat_gpt_client.converse(message=user_message, conversation_id=None) # type: ignore
 
     # Update the conversation_id with the conversation_id from the response
     conversation_id = response.conversation_id

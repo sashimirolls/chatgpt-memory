@@ -25,7 +25,7 @@ redis_datastore_config = RedisDataStoreConfig(
 redis_datastore = RedisDataStore(config=redis_datastore_config)
 
 # Instantiate a MemoryManager object with the RedisDataStore object and EmbeddingClient object
-memory_manager = MemoryManager(datastore=redis_datastore, embed_client=embed_client, topk=1)
+memory_manager = MemoryManager(datastore=redis_datastore, embed_client=embed_client, topk=100)
 
 # Instantiate a ChatGPTConfig object with the OpenAI API key and verbose set to True
 chat_gpt_config = ChatGPTConfig(api_key=OPENAI_API_KEY, verbose=False)
